@@ -7,7 +7,7 @@ A Symfony project created on June 18, 2016, 10:10 pm.
 
 1. run composer install
 2. create DB: exozet 
-3. run ```php bin/console doctrin:migrations:diff ```
+3. run ```php bin/console doctrin:migrations:migrate```
 
 # sign in
 
