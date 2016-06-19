@@ -1,0 +1,27 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <div id="welcome">
+                <h1><span>Welcome to the new Article Blog </span></h1>
+            </div>
+            <form style="float: left;" action="{{ path('login') }}" method="post">
+                <label for="username">Username:</label>
+                <input class="form-control" required="required" type="text" id="username" name="_username" value="{{ last_username }}" />
+                <br />
+                <label for="password">Password:</label>
+                <input class="form-control" required="required" type="password" id="password" name="_password" />
+
+                <input type="hidden" name="_target_path" value="/" />
+                <div class="col-sm-12" style="margin: 10px">
+                    <button class="btn btn-primary" type="submit">login</button>
+                    <a href="{{ path('register') }}" class="btn btn-success">register</a>
+                </div>
+            </form>
+            {% if error %}
+                <div>{{ error.messageKey|trans(error.messageData, 'identity') }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

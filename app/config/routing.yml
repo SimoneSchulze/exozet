@@ -1,3 +1,14 @@
 app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+  resource: "@AppBundle/Controller/"
+  type:     annotation
+
+logout:
+  path: /logout
+
+
+articles:
+  path:     /articles
+  defaults: { _controller: AppBundle:Articles:index }
+  methods:  [GET]
+
+

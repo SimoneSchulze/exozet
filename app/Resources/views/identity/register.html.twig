@@ -1,0 +1,16 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <div id="welcome">
+        <h1><span>Welcome to</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>
+    </div>
+
+    {% form_theme form 'bootstrap_3_layout.html.twig'  %}
+    {{ form_start(form) }}
+        {{ form_row(form.username) }}
+        <br />
+        {{ form_row(form.plainPassword.first) }}
+        {{ form_row(form.plainPassword.second) }}
+        <button type="submit">Register!</button>
+    {{ form_end(form) }}
+{% endblock %}

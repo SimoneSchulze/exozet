@@ -1,0 +1,30 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <h1>Articles edit</h1>
+
+    <div class="container">
+        {% form_theme edit_form 'bootstrap_3_layout.html.twig'  %}
+        {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" value="Save" class="btn btn-primary" />
+        {{ form_end(edit_form) }}
+
+        <div class="container" style="float: right;">
+            <ul>
+                <li>
+                    <a class="btn btn-info" href="{{ path('articles_index') }}">Back to the list</a>
+                </li>
+                <li>
+                    <form action="{{ path('articles_delete', { 'id': article.id }) }}" method="post">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        {{ form_widget(delete_form) }}
+                        <button type="submit" class="btn btn-small">
+                            <i class="icon-trash"></i> Delete
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

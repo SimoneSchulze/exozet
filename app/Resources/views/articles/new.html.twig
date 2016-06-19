@@ -1,0 +1,17 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <h1>Articles create</h1>
+
+    {% form_theme form 'bootstrap_3_layout.html.twig'  %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input class="btn btn-primary" type="submit" value="Create" />
+    {{ form_end(form) }}
+
+    <ul style="float: right;">
+        <li>
+            <a class="btn btn-info" href="{{ path('articles_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

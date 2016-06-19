@@ -2,20 +2,42 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Entity\Articles;
 
-class DefaultController extends Controller
+/**
+ * Default controller.
+ *
+ * @Route("/")
+ */
+class DefaultController extends BaseController
 {
     /**
-     * @Route("/", name="homepage")
+     * Lists all Articles entities.
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("/", name="articles_index")
+     * @Method("GET")
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
-        ]);
+        $thisPage = $request->get('page') ? $request->get('page') : 1;
+        
+        $limit = $this->container->getParameter('articles_per_page');
+        $pager = $this->getDoctrine()
+                      ->getRepository('AppBundle:Articles')
+                      ->getAllArticles($thisPage, $limit );
+        $deleteForms = array();
+        foreach ($pager  as $entity) {
+            $deleteForms[$entity->getId()] = $this->createDeleteForm($entity)->createView();
+        }
+        $maxPages = ceil($pager->count() / $limit);
+        return $this->render('articles/index.html.twig', compact('deleteForms','pager', 'maxPages', 'thisPage'));
     }
+    
+
 }

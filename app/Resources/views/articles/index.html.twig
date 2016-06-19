@@ -1,0 +1,62 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <h1>Articles list</h1>
+    {% if maxPages > 1 %}
+        <ul class="pagination pagination-sm">
+            {# `«` arrow  #}
+            <li {{ thisPage == 1 ? 'class="disabled"' }}>
+                <a href="{{ path('articles_index', {page: thisPage-1 < 1 ? 1 : thisPage-1}) }}">«</a>
+            </li>
+
+            {# Render each page number #}
+            {% for i in 1..maxPages %}
+                <li {{ thisPage == i ? 'class="active"' }}>
+                    <a href="{{ path('articles_index', {page: i}) }}">{{ i }}</a>
+                </li>
+            {% endfor %}
+
+            {# `»` arrow #}
+            <li {{ thisPage == maxPages ? 'class="disabled"' }}>
+                <a href="{{ path('articles_index', {page: thisPage+1 <= maxPages ? thisPage+1 : thisPage}) }}">»</a>
+            </li>
+        </ul>
+    {% endif %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email-Address</th>
+                <th>Text</th>
+                <th>Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for article in pager %}
+            <tr>
+                <td><a href="{{ path('articles_show', { 'id': article.id }) }}">{{ article.name }}</a></td>
+                <td>{{ article.emailAddress }}</td>
+                <td>{{ article.text }}</td>
+                <td>{{ article.id }}</td>
+                <td>
+                    <form class="btn btn-link" action="{{ path('articles_delete', { 'id': article.id }) }}" method="post">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        {{ form_widget(deleteForms[article.id]) }}
+                        <button type="submit" class="btn btn-link">
+                            <i class="icon-trash"></i> Delete
+                        </button>
+                    </form>
+                    <a href="{{ path('articles_edit', { 'id': article.id }) }}">edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul style="float: right;">
+        <li>
+            <a class="btn btn-primary" href="{{ path('articles_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

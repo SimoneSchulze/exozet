@@ -1,13 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ asset('assets/css/exo.css') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div class="container">
+            {% for flash_message in app.session.flashBag.get('notice') %}
+                <div class="flash-notice">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
+            {% block body %}{% endblock %}
+        </div>
+        <div class="site-footer">
+             Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }} &nbsp;<a class="btn btn-info btn-sm" href="{{ path('logout') }}">Logout</a>
+        </div>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
